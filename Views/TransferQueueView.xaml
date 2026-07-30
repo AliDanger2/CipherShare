@@ -1,0 +1,79 @@
+<UserControl x:Class="CipherShare.Views.TransferQueueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:CipherShare.Views.Controls">
+    <DockPanel>
+
+        <!-- filter tabs + counts -->
+        <Grid DockPanel.Dock="Top" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="All" Padding="12,6" FontSize="12"
+                        Command="{Binding DirectionFilterCommand}" CommandParameter="All">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DirectionFilter}" Value="All">
+                                    <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Content="Sending" Padding="12,6" FontSize="12" Margin="6,0,0,0"
+                        Command="{Binding DirectionFilterCommand}" CommandParameter="Sent">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DirectionFilter}" Value="Sent">
+                                    <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Content="Receiving" Padding="12,6" FontSize="12" Margin="6,0,0,0"
+                        Command="{Binding DirectionFilterCommand}" CommandParameter="Received">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DirectionFilter}" Value="Received">
+                                    <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="{Binding ActiveCount, StringFormat='{}{0} active'}" FontSize="12"
+                           Foreground="{StaticResource TextMutedBrush}" Margin="0,0,12,0"/>
+                <TextBlock Text="{Binding PausedCount, StringFormat='{}{0} paused'}" FontSize="12"
+                           Foreground="{StaticResource TextMutedBrush}" Margin="0,0,12,0"/>
+                <TextBlock Text="{Binding PendingCount, StringFormat='{}{0} pending'}" FontSize="12"
+                           Foreground="{StaticResource TextMutedBrush}"/>
+            </StackPanel>
+        </Grid>
+
+        <TextBlock DockPanel.Dock="Top" Text="Nothing in the queue. Send some files from the Devices page to see them here."
+                   FontSize="12" Foreground="{StaticResource TextMutedBrush}" Margin="0,0,0,16"
+                   Visibility="{Binding FilteredTransfers.Count, Converter={StaticResource ZeroCountToVisibilityConverter}}"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding FilteredTransfers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <controls:TransferRowControl
+                            PauseCommand="{Binding DataContext.State.PauseTransferCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            ResumeCommand="{Binding DataContext.State.ResumeTransferCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            CancelCommand="{Binding DataContext.State.CancelTransferCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            RetryCommand="{Binding DataContext.State.RetryTransferCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

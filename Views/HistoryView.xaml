@@ -1,0 +1,76 @@
+<UserControl x:Class="CipherShare.Views.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:CipherShare.Views.Controls">
+    <DockPanel>
+
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,16">
+            <Button Content="All" Padding="12,6" FontSize="12" Command="{Binding StatusFilterCommand}" CommandParameter="All">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding StatusFilter}" Value="All">
+                                <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Content="Completed" Padding="12,6" FontSize="12" Margin="6,0,0,0"
+                    Command="{Binding StatusFilterCommand}" CommandParameter="Completed">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding StatusFilter}" Value="Completed">
+                                <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Content="Failed" Padding="12,6" FontSize="12" Margin="6,0,0,0"
+                    Command="{Binding StatusFilterCommand}" CommandParameter="Failed">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding StatusFilter}" Value="Failed">
+                                <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Content="Canceled" Padding="12,6" FontSize="12" Margin="6,0,0,0"
+                    Command="{Binding StatusFilterCommand}" CommandParameter="Canceled">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding StatusFilter}" Value="Canceled">
+                                <Setter Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+
+        <TextBlock DockPanel.Dock="Top" Text="No history yet. Completed, failed, and canceled transfers will show up here."
+                   FontSize="12" Foreground="{StaticResource TextMutedBrush}" Margin="0,0,0,16"
+                   Visibility="{Binding FilteredTransfers.Count, Converter={StaticResource ZeroCountToVisibilityConverter}}"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding FilteredTransfers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <controls:TransferRowControl
+                            RetryCommand="{Binding DataContext.State.RetryTransferCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

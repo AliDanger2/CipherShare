@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- net8.0-windows targets the Windows desktop flavor of .NET 8, which is required for WPF -->
+    <TargetFramework>net8.0-windows</TargetFramework>
+
+    <!-- WinExe = a real Windows GUI application (no console window behind it).
+         Without this, the SDK defaults to building a class library instead of an app,
+         which is why App.xaml (marked as the app's entry point) failed to compile. -->
+    <OutputType>WinExe</OutputType>
+
+    <Nullable>disable</Nullable>
+
+    <!-- Deliberately OFF: with both UseWPF and UseWindowsForms on, enabling this makes the
+         SDK auto-import System.Windows.Forms AND System.Windows.Controls everywhere, and
+         several type names exist in both (UserControl, Timer, Application, DragEventArgs),
+         which fails the build with "ambiguous reference" errors. Every file in this project
+         has its own explicit `using` statements instead, so nothing relies on this. -->
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <UseWPF>true</UseWPF>
+
+    <!-- FolderBrowserDialog (used for picking the download folder and folders to send)
+         lives in Windows Forms, so we pull that in alongside WPF. This is a very common,
+         well supported way to get folder-picking in a WPF app. -->
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <RootNamespace>CipherShare</RootNamespace>
+    <AssemblyName>CipherShare</AssemblyName>
+
+	<Authors>Erfan Mokhtari, Mohamad Reza Mokhtari</Authors>
+	<Company>Erfan Mokhtari &amp; Mohamad Reza Mokhtari</Company>
+    <Copyright>Copyright © Erfan Mokhtari &amp; Mohamad Reza Mokhtari. All rights reserved.</Copyright>
+    <Product>CipherShare</Product>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+  </PropertyGroup>
+
+</Project>
