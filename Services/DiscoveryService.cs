@@ -154,6 +154,15 @@ public class DiscoveryService : IDisposable
 
     private void SendGoodbye() => Broadcast("Goodbye");
 
+    /// <summary>
+    /// Sends one announce/goodbye packet out of every real network adapter, instead of just
+    /// whichever single adapter the old "auto-pick one" heuristic guessed. This is what
+    /// actually fixes "the desktop app can't see my phone" when the desktop machine has more
+    /// than one plausible adapter up at once (e.g. Wi-Fi + Ethernet, or a VPN client running
+    /// alongside a normal Wi-Fi connection) - see NetworkHelper.GetAllBroadcastEndpoints for
+    /// the adapter-selection details. If the user has explicitly pinned one adapter in
+    /// Settings, that choice is respected exactly as before and nothing is fanned out.
+    /// </summary>
     private void Broadcast(string messageType)
     {
         var packet = new DiscoveryPacket
@@ -162,23 +171,34 @@ public class DiscoveryService : IDisposable
             DeviceId = _identity.DeviceId,
             DeviceName = _identity.DeviceName,
             OsType = LocalDeviceIdentity.CurrentOsType(),
+            DeviceType = LocalDeviceIdentity.CurrentDeviceType().ToWireValue(),
             TransferPort = _port
         };
 
         var json = JsonSerializer.Serialize(packet);
         var bytes = Encoding.UTF8.GetBytes(json);
 
-        // A fresh, send-only socket avoids the platform quirks that can come from sending
-        // broadcast traffic out of a socket that's also bound for receiving.
-        //
-        // Bound to the chosen (or auto-detected) adapter's own address before sending. This
-        // matters on machines with virtual adapters (VMware, VirtualBox, Hyper-V, etc.):
-        // an *unbound* broadcast socket lets Windows' routing table decide which adapter
-        // 255.255.255.255 goes out of, and it can pick a virtual adapter that isn't actually
-        // connected to the LAN - so the announce is sent but never reaches anyone. Binding to
-        // a specific local address forces it out that adapter, regardless of routing metrics.
-        var (localAddress, broadcastAddress) = NetworkHelper.GetBroadcastEndpoint(_preferredAdapterId);
+        if (!string.IsNullOrEmpty(_preferredAdapterId))
+        {
+            var (localAddress, broadcastAddress) = NetworkHelper.GetBroadcastEndpoint(_preferredAdapterId);
+            SendOn(bytes, localAddress, broadcastAddress, _port);
+            return;
+        }
 
+        foreach (var (localAddress, broadcastAddress, _) in NetworkHelper.GetAllBroadcastEndpoints())
+        {
+            SendOn(bytes, localAddress, broadcastAddress, _port);
+        }
+    }
+
+    /// <summary>
+    /// A fresh, send-only socket avoids the platform quirks that can come from sending
+    /// broadcast traffic out of a socket that's also bound for receiving. Binding to a
+    /// specific local address forces the packet out that adapter, regardless of routing
+    /// metrics, instead of letting the OS pick.
+    /// </summary>
+    private static void SendOn(byte[] bytes, IPAddress localAddress, IPAddress broadcastAddress, int port)
+    {
         using var sender = new UdpClient();
         sender.EnableBroadcast = true;
         try
@@ -187,11 +207,12 @@ public class DiscoveryService : IDisposable
             {
                 sender.Client.Bind(new IPEndPoint(localAddress, 0));
             }
-            sender.Send(bytes, bytes.Length, new IPEndPoint(broadcastAddress, _port));
+            sender.Send(bytes, bytes.Length, new IPEndPoint(broadcastAddress, port));
         }
         catch
         {
-            // No network available right now - next timer tick will try again.
+            // No network available on this adapter right now - next timer tick will try again,
+            // and other adapters (if any) still get their own attempt this tick.
         }
     }
 

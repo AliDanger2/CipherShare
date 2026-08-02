@@ -41,6 +41,8 @@ public class AppState : ObservableObject, IDisposable
 
     public string LocalOsType => LocalDeviceIdentity.CurrentOsType();
 
+    public DeviceType LocalDeviceType => LocalDeviceIdentity.CurrentDeviceType();
+
     public int UnreadNotificationCount => Notifications.Count(n => !n.IsRead);
 
     /// <summary>Raised whenever a new transfer request arrives, so the UI can pop the accept/decline dialog.</summary>
@@ -143,6 +145,7 @@ public class AppState : ObservableObject, IDisposable
             existing.IpAddress = ip;
             existing.TransferPort = packet.TransferPort;
             existing.OsType = packet.OsType;
+            existing.DeviceType = DeviceTypeExtensions.ParseWireValue(packet.DeviceType);
             existing.LastSeenUtc = DateTime.UtcNow;
             existing.Status = DeviceStatus.Online;
 

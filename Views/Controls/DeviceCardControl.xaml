@@ -9,8 +9,14 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Ellipse Width="9" Height="9" Margin="0,0,8,0"
                              Fill="{Binding Status, Converter={StaticResource DeviceStatusToBrushConverter}}"/>
+                    <Viewbox Width="15" Height="15" Margin="0,0,6,0"
+                             ToolTip="{Binding DeviceType, Converter={StaticResource DeviceTypeToLabelConverter}}">
+                        <Path Data="{Binding DeviceType, Converter={StaticResource DeviceTypeToIconConverter}}"
+                              Style="{StaticResource LucideIconStyle}"
+                              Stroke="{StaticResource TextSecondaryBrush}"/>
+                    </Viewbox>
                     <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="14"
-                               TextTrimming="CharacterEllipsis" MaxWidth="150"/>
+                               TextTrimming="CharacterEllipsis" MaxWidth="130"/>
                 </StackPanel>
                 <Viewbox Width="14"
                          Height="14"
@@ -22,9 +28,9 @@
                 </Viewbox>
             </Grid>
 
-            <TextBlock Text="{Binding IpAddress}" FontSize="12" Foreground="{StaticResource TextMutedBrush}" Margin="17,4,0,0"/>
+            <TextBlock Text="{Binding IpAddress}" FontSize="12" Foreground="{StaticResource TextMutedBrush}" Margin="38,4,0,0"/>
 
-            <StackPanel Orientation="Horizontal" Margin="17,2,0,0">
+            <StackPanel Orientation="Horizontal" Margin="38,2,0,0">
                 <TextBlock Text="{Binding OsType}" FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
                 <TextBlock Text=" · " FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
                 <TextBlock Text="{Binding Status, Converter={StaticResource DeviceStatusToLabelConverter}}"

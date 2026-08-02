@@ -40,6 +40,16 @@ public class DeviceModel : ObservableObject
         set => Set(ref _osType, value);
     }
 
+    /// <summary>This device's form factor (desktop/laptop/mobile/unknown) - drives which
+    /// icon its card shows. Populated from the DeviceType field of its discovery packets;
+    /// see DeviceTypeExtensions for how the wire string maps to this enum.</summary>
+    private DeviceType _deviceType = DeviceType.Unknown;
+    public DeviceType DeviceType
+    {
+        get => _deviceType;
+        set => Set(ref _deviceType, value);
+    }
+
     private DeviceStatus _status = DeviceStatus.Offline;
     public DeviceStatus Status
     {

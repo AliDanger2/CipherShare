@@ -18,6 +18,10 @@ public class DiscoveryPacket
     public string DeviceName { get; set; }
     public string OsType { get; set; }
 
+    /// <summary>"desktop", "laptop", "mobile", or anything else (treated as Unknown) - see
+    /// Models.DeviceTypeExtensions for how this maps to DeviceModel.DeviceType.</summary>
+    public string DeviceType { get; set; }
+
     /// <summary>The TCP port this device is listening on for incoming file transfers.</summary>
     public int TransferPort { get; set; }
 }

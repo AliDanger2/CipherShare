@@ -172,8 +172,10 @@
 
                             <!-- Navigation -->
                             <StackPanel DockPanel.Dock="Top" Margin="0,8,0,0">
-                                <Button Content="Home" Command="{Binding NavigateCommand}" CommandParameter="Home"
-                                        HorizontalContentAlignment="Left">
+                                <Button Command="{Binding NavigateCommand}"
+        CommandParameter="Home"
+        HorizontalContentAlignment="Left">
+
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                             <Style.Triggers>
@@ -184,10 +186,24 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="18" Height="18" Margin="0,0,10,0">
+                                            <Path Style="{StaticResource LucideIconStyle}"
+                  Data="{StaticResource HomeIcon}"/>
+                                        </Viewbox>
+
+                                        <TextBlock Text="Home"
+                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+
                                 </Button>
 
-                                <Button Content="Devices" Command="{Binding NavigateCommand}" CommandParameter="Devices"
-                                        HorizontalContentAlignment="Left" Margin="0,4,0,0">
+                                <Button Command="{Binding NavigateCommand}"
+        CommandParameter="Devices"
+        HorizontalContentAlignment="Left"
+        Margin="0,4,0,0">
+
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                             <Style.Triggers>
@@ -198,10 +214,24 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="18" Height="18" Margin="0,0,10,0">
+                                            <Path Style="{StaticResource LucideIconStyle}"
+                  Data="{StaticResource DevicesIcon}"/>
+                                        </Viewbox>
+
+                                        <TextBlock Text="Devices"
+                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+
                                 </Button>
 
-                                <Button Command="{Binding NavigateCommand}" CommandParameter="Queue"
-                                        HorizontalContentAlignment="Left" Margin="0,4,0,0">
+                                <Button Command="{Binding NavigateCommand}"
+        CommandParameter="Queue"
+        HorizontalContentAlignment="Left"
+        Margin="0,4,0,0">
+
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                             <Style.Triggers>
@@ -212,17 +242,42 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Transfer Queue"/>
-                                        <Border Background="{StaticResource AccentBrush}" CornerRadius="8" Padding="6,1" Margin="8,0,0,0"
-                                                Visibility="{Binding Queue.ActiveCount, Converter={StaticResource CountToVisibilityConverter}}">
-                                            <TextBlock Text="{Binding Queue.ActiveCount}" FontSize="10" FontWeight="Bold" Foreground="#0D1117"/>
+
+                                        <Viewbox Width="18"
+                 Height="18"
+                 Margin="0,0,10,0">
+                                            <Path Style="{StaticResource LucideIconStyle}"
+                  Data="{StaticResource QueueIcon}"/>
+                                        </Viewbox>
+
+                                        <TextBlock Text="Transfer Queue"
+                   VerticalAlignment="Center"/>
+
+                                        <Border Background="{StaticResource AccentBrush}"
+                CornerRadius="8"
+                Padding="6,1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
+                Visibility="{Binding Queue.ActiveCount, Converter={StaticResource CountToVisibilityConverter}}">
+
+                                            <TextBlock Text="{Binding Queue.ActiveCount}"
+                       FontSize="10"
+                       FontWeight="Bold"
+                       Foreground="#0D1117"/>
+
                                         </Border>
+
                                     </StackPanel>
+
                                 </Button>
 
-                                <Button Content="History" Command="{Binding NavigateCommand}" CommandParameter="History"
-                                        HorizontalContentAlignment="Left" Margin="0,4,0,0">
+                                <Button Command="{Binding NavigateCommand}"
+        CommandParameter="History"
+        HorizontalContentAlignment="Left"
+        Margin="0,4,0,0">
+
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                             <Style.Triggers>
@@ -233,10 +288,24 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="18" Height="18" Margin="0,0,10,0">
+                                            <Path Style="{StaticResource LucideIconStyle}"
+                  Data="{StaticResource HistoryIcon}"/>
+                                        </Viewbox>
+
+                                        <TextBlock Text="History"
+                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+
                                 </Button>
 
-                                <Button Content="Settings" Command="{Binding NavigateCommand}" CommandParameter="Settings"
-                                        HorizontalContentAlignment="Left" Margin="0,4,0,0">
+                                <Button Command="{Binding NavigateCommand}"
+        CommandParameter="Settings"
+        HorizontalContentAlignment="Left"
+        Margin="0,4,0,0">
+
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
                                             <Style.Triggers>
@@ -247,6 +316,17 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="18" Height="18" Margin="0,0,10,0">
+                                            <Path Style="{StaticResource LucideIconStyle}"
+                  Data="{StaticResource SettingsIcon}"/>
+                                        </Viewbox>
+
+                                        <TextBlock Text="Settings"
+                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+
                                 </Button>
                             </StackPanel>
 

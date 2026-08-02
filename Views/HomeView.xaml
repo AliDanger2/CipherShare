@@ -23,7 +23,15 @@
                     <StackPanel>
                         <TextBlock Text="THIS DEVICE" FontSize="10" FontWeight="Bold"
                                    Foreground="{StaticResource TextMutedBrush}"/>
-                        <TextBlock Text="{Binding DeviceName}" FontSize="20" FontWeight="Bold" Margin="0,6,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                            <Viewbox Width="20" Height="20" Margin="0,0,8,0"
+                                     ToolTip="{Binding LocalDeviceType, Converter={StaticResource DeviceTypeToLabelConverter}}">
+                                <Path Data="{Binding LocalDeviceType, Converter={StaticResource DeviceTypeToIconConverter}}"
+                                      Style="{StaticResource LucideIconStyle}"
+                                      Stroke="{StaticResource AccentBrush}"/>
+                            </Viewbox>
+                            <TextBlock Text="{Binding DeviceName}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <TextBlock Text="{Binding LocalIpAddress}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
                             <TextBlock Text="  ·  " FontSize="12" Foreground="{StaticResource TextMutedBrush}"/>

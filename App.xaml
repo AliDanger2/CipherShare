@@ -27,6 +27,8 @@
             <conv:DeviceIsReachableConverter x:Key="DeviceIsReachableConverter"/>
             <conv:TrustLabelConverter x:Key="TrustLabelConverter"/>
             <conv:TransferStatusToBrushConverter x:Key="TransferStatusToBrushConverter"/>
+            <conv:DeviceTypeToIconConverter x:Key="DeviceTypeToIconConverter"/>
+            <conv:DeviceTypeToLabelConverter x:Key="DeviceTypeToLabelConverter"/>
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 

@@ -25,10 +25,10 @@
                               Stretch="Uniform">
                         <Path.Style>
                             <Style TargetType="Path">
-                                <Setter Property="Data" Value="{StaticResource ArrowUpIcon}"/>
+                                <Setter Property="Data" Value="{StaticResource UploadIcon}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Direction}" Value="Received">
-                                        <Setter Property="Data" Value="{StaticResource ArrowDownIcon}"/>
+                                        <Setter Property="Data" Value="{StaticResource DownloadIcon}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

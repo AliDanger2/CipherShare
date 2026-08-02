@@ -13,6 +13,7 @@ public class HomeViewModel : ObservableObject
     public string DeviceName => State.Identity?.DeviceName ?? System.Environment.MachineName;
     public string LocalIpAddress => State.LocalIpAddress;
     public string LocalOsType => State.LocalOsType;
+    public DeviceType LocalDeviceType => State.LocalDeviceType;
     public int NetworkPort => State.Settings.NetworkPort;
 
     public System.Collections.ObjectModel.ObservableCollection<DeviceModel> Devices => State.Devices;
