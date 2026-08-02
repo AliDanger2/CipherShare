@@ -4,14 +4,14 @@ A lightweight LAN file-sharing app for Windows, built with WPF and .NET 8. Devic
 
 ## Features
 
-- **Automatic device discovery** — instances on the same LAN find each other over UDP broadcast, no manual pairing or IP entry needed.
-- **Direct file transfers** — files and whole folders move straight over TCP, with real-time progress and speed.
-- **Integrity verification** — every received file is checked against a SHA-256 hash computed by the sender.
-- **Transfer controls** — configurable concurrent transfer limits, bandwidth throttling, and chunked streaming.
-- **Trust & confirmation levels** — require confirmation for every incoming transfer, skip it for trusted devices only, or disable it entirely.
-- **Transfer history** — a persisted log of past sends and receives.
-- **Desktop notifications** — optional alerts for discovered devices, incoming transfers, and completed, failed, or lost connections.
-- **Custom, modern UI** — a hand-styled window with its own title bar, built entirely in WPF/XAML.
+- **Automatic device discovery** - instances on the same LAN find each other over UDP broadcast, no manual pairing or IP entry needed.
+- **Direct file transfers** - files and whole folders move straight over TCP, with real-time progress and speed.
+- **Integrity verification** - every received file is checked against a SHA-256 hash computed by the sender.
+- **Transfer controls** - configurable concurrent transfer limits, bandwidth throttling, and chunked streaming.
+- **Trust & confirmation levels** - require confirmation for every incoming transfer, skip it for trusted devices only, or disable it entirely.
+- **Transfer history** - a persisted log of past sends and receives.
+- **Desktop notifications** - optional alerts for discovered devices, incoming transfers, and completed, failed, or lost connections.
+- **Custom, modern UI** - a hand-styled window with its own title bar, built entirely in WPF/XAML.
 
 ## How it works
 
@@ -22,7 +22,7 @@ CipherShare has two independent pieces of networking:
 | **Discovery** | UDP broadcast | Each instance periodically announces itself (name, OS, device ID, transfer port) on the LAN and listens for announcements from others. |
 | **Transfers** | TCP | The sender opens a connection to the receiver, sends a file header, waits for accept/decline, then streams file bytes followed by a SHA-256 trailer for verification. |
 
-All application data — settings, known devices, transfer history, and this installation's identity — is stored as plain JSON under:
+All application data - settings, known devices, transfer history, and this installation's identity - is stored as plain JSON under:
 
 ```
 %AppData%\CipherShare\
